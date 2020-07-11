@@ -3,6 +3,7 @@
  */
 
 #include <caml/mlvalues.h>
+#include <caml/fail.h>
 
 #include "mirage_crypto.h"
 
@@ -83,7 +84,8 @@ CAMLprim value caml_cycle_counter (value __unused(unit)) {
 #elif defined (__arm__) || defined (__aarch64__)
   return Val_long (read_virtual_count ());
 #else
-#error ("No known cycle-counting instruction.")
+  caml_failwith("No known cycle-counting instruction.");
+  return Val_long (0);
 #endif
 }
 
